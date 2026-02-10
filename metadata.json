@@ -1,0 +1,5 @@
+{
+  "name": "Project Hub",
+  "description": "A centralized dashboard to manage and showcase multiple projects with Firebase integration.",
+  "requestFramePermissions": []
+}
