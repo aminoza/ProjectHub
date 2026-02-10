@@ -163,6 +163,25 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
         }));
     } else {
         setFormData(prev => ({ ...prev, [name]: value }));
+
+        // Check if link input is changing to update embedded status
+        if (name === 'link') {
+            if (value.startsWith('data:text/html')) {
+                setIsEmbedded(true);
+                // Attempt to decode if pasting new data uri
+                try {
+                    const base64Content = value.split(',')[1];
+                    if (base64Content) {
+                        const decoded = decodeURIComponent(escape(window.atob(base64Content)));
+                        setHtmlCode(decoded);
+                    }
+                } catch (e) {
+                    // ignore decode errors on typing
+                }
+            } else {
+                setIsEmbedded(false);
+            }
+        }
     }
   };
 
@@ -178,12 +197,16 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
     try {
       let finalLink = formData.link;
 
-      // If embedded and code was changed, re-encode it
+      // If embedded and code was changed (or we are in code mode), re-encode it
+      // We prioritize htmlCode if we are in embedded mode, to ensure code edits are captured
       if (isEmbedded && htmlCode) {
          try {
             const base64 = btoa(unescape(encodeURIComponent(htmlCode)));
             finalLink = `data:text/html;base64,${base64}`;
          } catch (err) {
+            console.error("Error encoding code", err);
+            // If encoding fails, fallback to existing link or let it be.
+            // But we should warn user ideally. For now, alert.
             alert("Error encoding code. Please check for special characters.");
             setLoading(false);
             return;
@@ -314,15 +337,21 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
 
                     {/* Links */}
                     <div className="space-y-4">
-                        {!isEmbedded && (
-                            <div>
-                                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5 ml-1">External Link</label>
-                                <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><LinkIcon className="text-gray-400" size={16} /></div>
-                                    <input type="text" name="link" value={formData.link} onChange={handleChange} className="w-full pl-10 pr-4 py-2.5 bg-white/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 outline-none text-sm" />
-                                </div>
+                        <div>
+                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5 ml-1">
+                                Project Link <span className="text-gray-400 font-normal ml-1 lowercase">(Optional)</span>
+                            </label>
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><LinkIcon className="text-gray-400" size={16} /></div>
+                                <input type="text" name="link" value={formData.link} onChange={handleChange} className="w-full pl-10 pr-4 py-2.5 bg-white/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 outline-none text-sm truncate" />
                             </div>
-                        )}
+                            {isEmbedded && (
+                                <p className="text-[10px] text-green-600 mt-1.5 ml-2 font-bold flex items-center">
+                                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 shadow-[0_0_5px_rgba(74,222,128,0.5)]"></span>
+                                    Using embedded HTML content
+                                </p>
+                            )}
+                        </div>
                         <div>
                              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5 ml-1">Image URL</label>
                              <div className="relative">
