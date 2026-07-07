@@ -11,40 +11,24 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+              sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
             },
             colors: {
-              glass: {
-                100: 'rgba(255, 255, 255, 0.1)',
-                200: 'rgba(255, 255, 255, 0.2)',
-                300: 'rgba(255, 255, 255, 0.3)',
-                400: 'rgba(255, 255, 255, 0.4)',
-                500: 'rgba(255, 255, 255, 0.5)',
-                600: 'rgba(255, 255, 255, 0.6)',
-                700: 'rgba(255, 255, 255, 0.7)',
-                800: 'rgba(255, 255, 255, 0.8)',
-                900: 'rgba(255, 255, 255, 0.9)',
+              google: {
+                blue: '#4285F4',
+                red: '#EA4335',
+                yellow: '#FBBC04',
+                green: '#34A853',
+                grey: '#F1F3F4',
               },
-              primary: {
-                50: '#f0f9ff',
-                100: '#e0f2fe',
-                200: '#bae6fd',
-                300: '#7dd3fc',
-                400: '#38bdf8',
-                500: '#0ea5e9',
-                600: '#0284c7',
-                700: '#0369a1',
-                800: '#075985',
-                900: '#0c4a6e',
+              accent: {
+                DEFAULT: '#4285F4',
+                hover: '#1a73e8',
+              },
+              surface: {
+                DEFAULT: '#ffffff',
+                secondary: '#f8f9fa',
               }
-            },
-            boxShadow: {
-              'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
-              'glass-hover': '0 20px 40px 0 rgba(31, 38, 135, 0.15)',
-              'glass-3d': '0 10px 40px -10px rgba(0,0,0,0.1), inset 0 1px 0 0 rgba(255,255,255,0.6), inset 0 -1px 0 0 rgba(0,0,0,0.05)',
-              'glass-3d-hover': '0 20px 50px -12px rgba(0,0,0,0.25), inset 0 1px 0 0 rgba(255,255,255,0.8), inset 0 -1px 0 0 rgba(0,0,0,0.05)',
-              'inner-light': 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.3)',
-              'pressed': 'inset 0 4px 8px rgba(0,0,0,0.1)',
             }
           },
         },
@@ -55,24 +39,10 @@
         font-family: 'Inter', sans-serif;
         margin: 0;
         min-height: 100vh;
-        /* Richer, deeper gradient */
-        background-color: #e0e7ff;
-        background-image: 
-          radial-gradient(at 0% 0%, hsla(253,16%,70%,1) 0, transparent 55%), 
-          radial-gradient(at 50% 10%, hsla(225,39%,60%,1) 0, transparent 55%), 
-          radial-gradient(at 100% 0%, hsla(339,49%,70%,1) 0, transparent 55%),
-          radial-gradient(at 90% 90%, hsla(190, 80%, 70%, 1) 0, transparent 55%),
-          radial-gradient(at 10% 90%, hsla(280, 60%, 75%, 1) 0, transparent 55%);
-        background-attachment: fixed;
-        background-size: 150% 150%;
-        animation: gradient-move 20s ease infinite alternate;
+        background-color: #ffffff;
+        color: #111111;
       }
-
-      @keyframes gradient-move {
-        0% { background-position: 0% 0%; }
-        100% { background-position: 100% 100%; }
-      }
-
+      
       .no-scrollbar::-webkit-scrollbar {
           display: none;
       }
@@ -92,9 +62,11 @@
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
-  </body>
+  <script type="module" src="/index.tsx"></script>
+</body>
 </html>

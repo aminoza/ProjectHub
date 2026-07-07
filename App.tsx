@@ -85,7 +85,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen text-gray-800">
+    <div className="flex min-h-screen text-[#111111] bg-white">
       
       {/* Sidebar */}
       <Sidebar 
@@ -103,54 +103,56 @@ const App: React.FC = () => {
       {/* Main Content */}
       <main className="flex-1 lg:ml-72 min-h-screen flex flex-col relative z-0">
         {/* Mobile Header */}
-        <div className="lg:hidden bg-glass-700 backdrop-blur-xl px-4 py-3 border-b border-white/20 flex items-center justify-between sticky top-0 z-30 shadow-glass">
+        <div className="lg:hidden bg-white px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 z-30">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
-               <span className="text-white font-serif font-bold text-lg">P</span>
+            <div className="flex flex-wrap w-6 h-6 rounded overflow-hidden">
+                <div className="w-3 h-3 bg-[#4285F4]"></div>
+                <div className="w-3 h-3 bg-[#34A853]"></div>
+                <div className="w-3 h-3 bg-[#FBBC04]"></div>
+                <div className="w-3 h-3 bg-[#EA4335]"></div>
             </div>
-            <span className="font-bold text-gray-900">Project Hub</span>
+            <span className="font-semibold text-gray-900 tracking-tight">Project Hub</span>
           </div>
           <button 
             onClick={() => setIsMobileSidebarOpen(true)}
-            className="p-2 text-gray-600 hover:bg-white/40 rounded-lg transition-colors"
+            className="p-2 text-gray-600 hover:bg-gray-50 rounded-full transition-colors"
           >
-            <Menu size={24} />
+            <Menu size={20} />
           </button>
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full">
+        <div className="flex-1 p-8 lg:p-16 max-w-7xl mx-auto w-full">
           
           {/* Header Section */}
-          <div className="mb-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="bg-glass-400 backdrop-blur-md px-6 py-4 rounded-3xl border border-white/40 shadow-glass">
-               <h2 className="text-3xl font-bold text-gray-900 mb-1 tracking-tight">{selectedCategory}</h2>
-               <p className="text-gray-600 text-sm font-medium">
-                 Showing {filteredProjects.length} result{filteredProjects.length !== 1 ? 's' : ''}
+          <div className="mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+               <h2 className="text-3xl font-semibold text-gray-900 mb-2 tracking-tight">{selectedCategory}</h2>
+               <p className="text-gray-500 text-sm font-medium">
+                 {filteredProjects.length} projects
                </p>
             </div>
-            {/* Can add extra filters or view toggles here if needed */}
           </div>
 
           {/* Grid */}
           {loading ? (
-            <div className="flex items-center justify-center h-64 bg-glass-300 backdrop-blur-md rounded-3xl border border-white/30">
-              <Loader2 className="animate-spin text-white drop-shadow-md" size={40} />
+            <div className="flex items-center justify-center h-64">
+              <Loader2 className="animate-spin text-google-blue" size={32} />
             </div>
           ) : connectionStatus === 'error' ? (
-            <div className="flex flex-col items-center justify-center h-64 text-center p-8 bg-glass-300 backdrop-blur-xl rounded-3xl border border-red-200/50 shadow-glass">
-              <div className="w-16 h-16 bg-red-100/50 rounded-full flex items-center justify-center mb-4 backdrop-blur-sm">
-                <WifiOff className="text-red-500" size={32} />
+            <div className="flex flex-col items-center justify-center h-64 text-center p-8 bg-white rounded-2xl border border-gray-100">
+              <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mb-4">
+                <WifiOff className="text-google-red" size={24} />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Connection Error</h3>
-              <p className="text-gray-600 max-w-xs mb-6">
-                Unable to connect to the project database. Please check your internet connection or API configuration.
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Connection Error</h3>
+              <p className="text-gray-500 max-w-xs mb-6 text-sm">
+                Unable to connect to the project database.
               </p>
               <button 
                 onClick={loadProjects}
-                className="px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-full font-semibold shadow-lg transition-all"
+                className="px-8 py-2.5 bg-google-red hover:bg-[#d93025] text-white rounded-full font-medium text-sm transition-all shadow-sm"
               >
-                Retry Connection
+                Retry
               </button>
             </div>
           ) : filteredProjects.length > 0 ? (
@@ -165,27 +167,27 @@ const App: React.FC = () => {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-64 text-center p-8 bg-glass-300 backdrop-blur-xl rounded-3xl border border-white/40 shadow-glass">
-              <div className="w-16 h-16 bg-white/40 rounded-full flex items-center justify-center mb-4 shadow-inner">
-                <Menu className="text-gray-500" size={32} />
+            <div className="flex flex-col items-center justify-center h-80 text-center p-8">
+              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-6">
+                <Menu className="text-gray-300" size={28} />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">No projects found</h3>
-              <p className="text-gray-600 max-w-xs mb-6">
-                Try adjusting your search or category filter, or create a new project.
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No projects found</h3>
+              <p className="text-gray-500 max-w-xs mb-8 text-sm">
+                Try adjusting your search or category filter.
               </p>
               <button 
                 onClick={() => setIsCreateModalOpen(true)}
-                className="px-6 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-semibold shadow-lg hover:shadow-primary-500/30 transition-all"
+                className="px-8 py-2.5 bg-google-blue hover:bg-[#1a73e8] text-white rounded-full font-medium text-sm transition-all shadow-sm"
               >
-                Create new project
+                Create project
               </button>
             </div>
           )}
         </div>
         
         {/* Footer */}
-        <footer className="mt-auto py-6 text-center text-xs text-gray-500 font-medium tracking-wide">
-            &copy; {new Date().getFullYear()} Project Hub. Designed with Glassmorphism.
+        <footer className="mt-auto py-8 text-center text-[10px] text-gray-400 uppercase tracking-widest font-medium">
+            &copy; {new Date().getFullYear()} Project Hub &middot; Portfolio
         </footer>
       </main>
 
